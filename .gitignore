@@ -1,0 +1,36 @@
+# Python-related
+__pycache__/
+*.py[cod]
+*.env
+*.sqlite3
+*.log
+
+# Django-related
+db.sqlite3
+/static/
+media/
+
+# Node.js-related
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+*.lock
+
+# Tailwind CSS-related
+/static/css/tailwind.css
+.postcssrc
+postcss.config.js
+tailwind.config.js
+
+# Environment settings
+.env
+.vscode/
+.idea/
+
+# MacOS-related
+.DS_Store
+
+# Ignore the built assets but keep the source files
+/styles/tailwind.css
+
