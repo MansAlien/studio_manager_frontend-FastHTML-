@@ -11,7 +11,7 @@ from fasthtml.common import (
 )
 import requests
 
-app, rt = fast_app(hdrs=(Link(rel="stylesheet", href="/static/css/tailwind.css"),))
+app, rt = fast_app(hdrs=(Link(rel="stylesheet", href="/static/src/output.css"),))
 
 @rt("/")
 def index():

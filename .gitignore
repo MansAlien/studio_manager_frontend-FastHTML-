@@ -7,7 +7,6 @@ __pycache__/
 
 # Django-related
 db.sqlite3
-/static/
 media/
 
 # Node.js-related
@@ -18,10 +17,7 @@ yarn-error.log
 *.lock
 
 # Tailwind CSS-related
-/static/css/tailwind.css
 .postcssrc
-postcss.config.js
-tailwind.config.js
 
 # Environment settings
 .env
@@ -30,7 +26,3 @@ tailwind.config.js
 
 # MacOS-related
 .DS_Store
-
-# Ignore the built assets but keep the source files
-/styles/tailwind.css
-
