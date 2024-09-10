@@ -2,7 +2,8 @@
 module.exports = {
   content: [
     'main.py',
-    '*.py',
+    "/**/.py",
+    "*.py",
     './node_modules/flowbite/**/*.js'
 
   ],
