@@ -1,4 +1,4 @@
-from fasthtml.common import fast_app, serve, Link
+from fasthtml.common import fast_app, serve, Link, Script
 from routes.home import home_get
 from routes.auth import LoginForm, login_get_route, login_post_route, logout_route
 import uvicorn
@@ -6,7 +6,9 @@ import uvicorn
 # Create the FastHTML app
 app, rt = fast_app(hdrs=(
     Link(rel="stylesheet", href="/static/css/output.css"),
-    Link(rel="stylesheet", href="/static/css/all.min.css"),))
+    Link(rel="stylesheet", href="/static/css/all.min.css"),
+    Script(src="/static/js/flowbite.min.js"),
+))
 
 # Login route for GET request (renders the login form)
 @rt("/login", methods=["GET"])  # Specify GET method

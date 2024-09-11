@@ -33,10 +33,13 @@ def login_get_route(sess):
     return c.Div(
         Header(sess, user),
         c.Div(
-            frm,
-            cls="bg-gray-700 p-6 rounded-lg w-full max-w-sm"  # Set a max-width and full width on small screens
+            c.Div(
+                frm,
+                cls="bg-gray-700 p-6 rounded-lg w-full max-w-sm"  # Set a max-width and full width on small screens
+            ),
+            cls="flex h-full w-full justify-center items-center"
         ),
-        cls="bg-gray-600 font-inter h-screen w-screen flex justify-center items-center px-4"  # Add padding to the sides for small screens
+        cls="bg-gray-600 font-inter h-screen w-screen"  # Add padding to the sides for small screens
     )
 
 @dataclass
