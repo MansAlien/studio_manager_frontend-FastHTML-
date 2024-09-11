@@ -18,7 +18,7 @@ def login_get_route(sess):
             p-2.5 bg-gray-800 border-gray-600 placeholder-gray-400
             text-white focus:ring-blue-500 focus:border-blue-500"""
         ),
-        c.H3("Password", cls="my-1 font-bold text-white text-sm"),
+        c.P("Password", cls="my-1 font-bold text-white text-sm"),
         c.Input(
             id='password',
             type='password',
@@ -27,16 +27,16 @@ def login_get_route(sess):
             p-2.5 bg-gray-800 border-gray-600 placeholder-gray-400
             text-white focus:ring-blue-500 focus:border-blue-500"""
         ),
-        c.Button('Login', type="submit"),
+        c.Button('Login', type="submit", cls="w-full bg-blue-500 text-white p-2 rounded"),
         action='/login', method='post'
     )
     return c.Div(
         Header(sess, user),
         c.Div(
             frm,
-            cls="bg-gray-700 p-6 rounded-lg w-2/5"  # Add padding and rounded corners for better UI
+            cls="bg-gray-700 p-6 rounded-lg w-full max-w-sm"  # Set a max-width and full width on small screens
         ),
-        cls="bg-gray-600 font-inter h-screen w-screen flex justify-center items-center"  # Adjusted 'items-center' for vertical centering
+        cls="bg-gray-600 font-inter h-screen w-screen flex justify-center items-center px-4"  # Add padding to the sides for small screens
     )
 
 @dataclass
