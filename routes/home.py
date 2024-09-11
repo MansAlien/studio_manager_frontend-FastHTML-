@@ -3,13 +3,6 @@ from components.header import Header
 import requests
 
 def home_get(sess):
-    user = {
-        "is_authenticated": True,
-        "username": "JohnDoe",  # Example user details
-        "first_name": "John",
-        "last_name": "Doe",
-        "email": "johndoe@example.com"
-    }
     access_token = sess.get('access_token')
     if not access_token:
         return c.RedirectResponse('/login', status_code=303)
@@ -17,9 +10,12 @@ def home_get(sess):
     #     "Authorization": f"Bearer {access_token}"
     # }
     # response = requests.get("http://localhost:8000/api/accounts/user/", headers=headers)
+    user = {
+        "username": sess['username'],  # Example user details
+    }
 
     return c.Div(
-        Header(),
+        Header(sess, user),
         c.Div(
         ),
         c.Div(

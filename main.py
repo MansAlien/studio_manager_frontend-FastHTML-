@@ -10,8 +10,8 @@ app, rt = fast_app(hdrs=(
 
 # Login route for GET request (renders the login form)
 @rt("/login", methods=["GET"])  # Specify GET method
-def login_get():
-    return login_get_route()
+def login_get(sess):
+    return login_get_route(sess)
 
 # Login route for POST request (handles form submission)
 @rt("/login", methods=["POST"])  # Specify POST method

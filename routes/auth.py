@@ -7,9 +7,10 @@ import jwt
 
 from components.header import Header
 
-def login_get_route():
+def login_get_route(sess):
+    user = {}
     frm = c.Form(
-        c.H1("Sign in", cls="my-2 font-bold"),
+        c.P("Username", cls="my-1 font-bold text-white text-sm"),
         c.Input(
             id='username',
             placeholder='Username',
@@ -17,6 +18,7 @@ def login_get_route():
             p-2.5 bg-gray-800 border-gray-600 placeholder-gray-400
             text-white focus:ring-blue-500 focus:border-blue-500"""
         ),
+        c.H3("Password", cls="my-1 font-bold text-white text-sm"),
         c.Input(
             id='password',
             type='password',
@@ -29,7 +31,7 @@ def login_get_route():
         action='/login', method='post'
     )
     return c.Div(
-        Header(),
+        Header(sess, user),
         c.Div(
             frm,
             cls="bg-gray-700 p-6 rounded-lg w-2/5"  # Add padding and rounded corners for better UI
