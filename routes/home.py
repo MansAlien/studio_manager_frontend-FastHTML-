@@ -19,7 +19,7 @@ def home_get(sess):
     # response = requests.get("http://localhost:8000/api/accounts/user/", headers=headers)
 
     return c.Div(
-        Header(user),
+        Header(),
         c.Div(
         ),
         c.Div(
