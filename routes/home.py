@@ -1,9 +1,15 @@
 from fasthtml import common as c
+from components.header import Header
+import requests
 
 def home_get(sess):
     access_token = sess.get('access_token')
     if not access_token:
         return c.RedirectResponse('/login', status_code=303)
+    headers = {
+        "Authorization": f"Bearer {access_token}"
+    }
+    response = requests.get("http://localhost:8000/api/accounts/user/", headers=headers)
 
     return c.Titled(
         "Home",
