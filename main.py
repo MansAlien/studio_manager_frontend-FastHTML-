@@ -4,7 +4,9 @@ from routes.auth import LoginForm, login_get_route, login_post_route, logout_rou
 import uvicorn
 
 # Create the FastHTML app
-app, rt = fast_app(hdrs=(Link(rel="stylesheet", href="/static/css/output.css"),))
+app, rt = fast_app(hdrs=(
+    Link(rel="stylesheet", href="/static/css/output.css"),
+    Link(rel="stylesheet", href="/static/css/all.min.css"),))
 
 # Login route for GET request (renders the login form)
 @rt("/login", methods=["GET"])  # Specify GET method
