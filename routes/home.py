@@ -16,8 +16,9 @@ def home_get(sess):
         Sidebar,
         c.Div(
             breadcrumb(),
-            cls="bg-gray-600 h-screen font-inter md:ml-64",
+            cls="bg-gray-600 font-inter md:ml-64",
             id="content",
+            style="height: 94dvh"
         ),
     ) 
     return home
