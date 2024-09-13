@@ -1,6 +1,7 @@
 from fasthtml import common as c
 from components.header import Header
 from components.sidebar import sidebar
+from components.breadcrumb import breadcrumb
 
 def home_get(sess):
     access_token = sess.get('access_token')
@@ -10,18 +11,13 @@ def home_get(sess):
     else:
         Sidebar = sidebar()
 
-    return c.Title("Studio Vision"), c.Div(
+    home =  c.Title("Studio Vision"), c.Div(
         Header(sess),
         Sidebar,
         c.Div(
+            breadcrumb(),
+            cls="bg-gray-600 h-screen font-inter md:ml-64",
+            id="content",
         ),
-        c.Div(
-            # Add a logout button
-            c.A("Logout",
-                href="/logout",
-                cls="bg-red-500 text-white py-2 px-4 rounded mt-4",
-                ),
-            cls="flex justify-end"
-        ),
-        cls="bg-gray-600 h-screen font-inter"
     ) 
+    return home
