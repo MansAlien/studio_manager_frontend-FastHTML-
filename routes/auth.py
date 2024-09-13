@@ -29,8 +29,8 @@ def login_get_route(sess):
         c.Button('Login', type="submit", cls="w-full bg-blue-500 text-white p-2 rounded"),
         action='/login', method='post'
     )
+
     return c.Div(
-        Header(sess),
         c.Div(
             c.Div(
                 frm,
