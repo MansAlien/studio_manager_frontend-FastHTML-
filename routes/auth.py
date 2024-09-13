@@ -34,7 +34,7 @@ def login_get_route(sess):
         c.Div(
             c.Div(
                 frm,
-                cls="bg-gray-700 p-6 rounded-lg w-full max-w-sm"  # Set a max-width and full width on small screens
+                cls="sm:bg-gray-700 p-6 rounded-lg w-full max-w-sm"  # Set a max-width and full width on small screens
             ),
             cls="flex h-full w-full justify-center items-center"
         ),
