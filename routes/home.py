@@ -10,12 +10,8 @@ def home_get(sess):
     #     "Authorization": f"Bearer {access_token}"
     # }
     # response = requests.get("http://localhost:8000/api/accounts/user/", headers=headers)
-    user = {
-        "username": sess['username'],  # Example user details
-    }
-
     return c.Div(
-        Header(sess, user),
+        Header(sess),
         c.Div(
         ),
         c.Div(

@@ -8,7 +8,6 @@ import jwt
 from components.header import Header
 
 def login_get_route(sess):
-    user = {}
     frm = c.Form(
         c.P("Username", cls="my-1 font-bold text-white text-sm"),
         c.Input(
@@ -31,7 +30,7 @@ def login_get_route(sess):
         action='/login', method='post'
     )
     return c.Div(
-        Header(sess, user),
+        Header(sess),
         c.Div(
             c.Div(
                 frm,
@@ -67,10 +66,21 @@ def login_post_route(login: LoginForm, sess):
         except jwt.InvalidTokenError:
             return c.RedirectResponse('/login', status_code=303)
 
-        sess['access_token'] = access_token
-        sess['refresh_token'] = refresh_token
-        sess['username'] = login.username
-        sess['user_id'] = user_id
+        #fetch user_data
+        user_details_url = f"http://localhost:8000/api/accounts/user/{user_id}/"
+        headers = {'Authorization': f'Bearer {access_token}'}
+        user_response = requests.get(user_details_url, headers=headers)
+
+        if user_response.status_code == 200:
+            user_data = user_response.json()
+            # Extract and save user information in the session
+            sess['access_token'] = access_token
+            sess['refresh_token'] = refresh_token
+            sess['username'] = user_data.get('username')
+            sess['first_name'] = user_data.get('first_name')
+            sess['last_name'] = user_data.get('last_name')
+            sess['email'] = user_data.get('email')
+
         return c.RedirectResponse('/', status_code=303)
     else:
         return c.RedirectResponse('/login', status_code=303)
@@ -78,6 +88,8 @@ def login_post_route(login: LoginForm, sess):
 def logout_route(sess):
     sess.pop('access_token', None)
     sess.pop('refresh_token', None)
+    sess.pop('first_name', None)
+    sess.pop('last_name', None)
+    sess.pop('email', None)
     sess.pop('username', None)
-    sess.pop('user_id', None)
     return c.RedirectResponse('/login', status_code=303)

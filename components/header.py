@@ -1,15 +1,15 @@
 from fasthtml import common as c
 
-def Header(sess, user):
+def Header(sess):
     # Check for user authentication via access_token in session
     access_token = sess.get('access_token')
 
     # Define the user section if authenticated
     user_section = c.P(cls="hidden")
-    if user:
+    if access_token:
         user_section = c.Div(
             c.Button(
-                c.Span(user['username'], cls="text-white text-lg font-semibold me-4"),
+                c.Span(sess['username'], cls="text-white text-lg font-semibold me-4"),
                 c.I(cls="text-2xl rounded-full fas fa-user-alt", style="color: #FFF;"),
                 type="button",
                 cls="flex text-sm rounded-full focus:ring focus:ring-gray-700 bg-gray-900 border-none hover:bg-gray-800 m-0",
@@ -17,11 +17,14 @@ def Header(sess, user):
             ),
             c.Div(
                 c.Div(
-                    c.Span(user['username'], cls="text-sm font-medium truncate text-gray-300"),
-                    cls="px-4 py-3"
+                    c.Div(
+                        c.Span(f"{sess['first_name']} {sess['last_name']}", cls="text-sm text-white font-semibold mb-1 block"),
+                        c.Span(sess['email'], cls="text-sm font-medium truncate text-gray-300"),
+                        cls="px-4 py-3"
+                    ),
                 ),
                 c.A("Logout", href="/logout", cls="block w-full px-4 py-2 text-sm text-gray-300 hover:bg-red-800 hover:text-white"),
-                cls="z-50 hidden my-4 text-base list-none divide-y rounded shadow bg-gray-700 divide-gray-600",
+                cls="z-50 hidden my-4 text-base list-none divide-y rounded-lg shadow bg-gray-700 divide-gray-600",
                 id="dropdown-user"
             ),
             cls="flex items-center ms-3"
