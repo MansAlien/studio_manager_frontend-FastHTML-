@@ -1,5 +1,6 @@
 from fasthtml.common import fast_app, serve, Link, Script
 from routes.home import home_get
+from routes.settings import settings_get
 from routes.auth import LoginForm, login_get_route, login_post_route, logout_route
 import uvicorn
 
@@ -30,6 +31,9 @@ def logout_rout(sess):
 def home(sess):
     return home_get(sess)
 
+@rt("/settings")
+def settings(sess):
+    return settings_get(sess)
 # Serve the app
 serve()
 
