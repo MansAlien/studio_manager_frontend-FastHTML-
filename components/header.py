@@ -9,7 +9,7 @@ def Header(sess):
     if access_token:
         user_section = c.Div(
             c.Button(
-                c.Span(sess['username'], cls="text-white text-lg font-semibold me-4"),
+                c.Span(sess['username'], cls="hidden sm:block text-white text-lg font-semibold me-4"),
                 c.I(cls="text-2xl rounded-full fas fa-user-alt", style="color: #FFF;"),
                 type="button",
                 cls="flex text-sm rounded-full focus:ring focus:ring-gray-700 bg-gray-900 border-none hover:bg-gray-800 m-0",
@@ -57,9 +57,9 @@ def Header(sess):
                         c.I(cls="fa-solid fa-camera mx-2 text-2xl", style="color: #ffffff;"),
                         c.Span(
                             "Studio Vision",
-                            cls="text-xl font-semibold sm:text-2xl whitespace-nowrap text-white"
+                            cls=" text-xl font-semibold sm:text-2xl whitespace-nowrap text-white"
                         ),
-                        cls="flex ms-2 md:me-24 items-center",
+                        cls="hidden sm:flex ms-2 md:me-24 items-center",
                         href="/"
                     ),
                     cls="flex items-center space-x-4"  # Ensure the button and logo are on the same line with spacing
