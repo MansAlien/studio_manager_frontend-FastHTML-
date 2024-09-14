@@ -6,6 +6,7 @@ import uvicorn
 
 # Create the FastHTML app
 app, rt = fast_app(hdrs=(
+    Link(rel="icon", href="/static/img/favicon.ico", type="image/x-icon"),
     Link(rel="stylesheet", href="/static/css/output.css"),
     Link(rel="stylesheet", href="/static/css/all.min.css"),
     Script(src="/static/js/flowbite.min.js"),

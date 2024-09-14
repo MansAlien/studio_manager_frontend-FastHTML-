@@ -6,9 +6,6 @@ from dotenv import load_dotenv
 import jwt
 from datetime import datetime, timezone
 
-from components.header import Header
-
-# Render the login form with an optional error message
 def login_get_route(sess, error_message=None):
     frm = c.Form(
         c.P("Username", cls="my-1 font-bold text-white text-sm"),

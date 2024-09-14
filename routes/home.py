@@ -2,7 +2,6 @@ from fasthtml import common as c
 from components.header import Header
 from components.sidebar import sidebar
 from components.breadcrumb import breadcrumb
-import requests
 from routes.auth import is_token_expired
 
 
