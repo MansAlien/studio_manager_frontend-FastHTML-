@@ -4,6 +4,7 @@ import requests
 import os
 from dotenv import load_dotenv
 import jwt
+from datetime import datetime, timezone
 
 from components.header import Header
 
@@ -29,8 +30,7 @@ def login_get_route(sess):
         c.Button('Login', type="submit", cls="w-full bg-blue-500 text-white p-2 rounded"),
         action='/login', method='post'
     )
-
-    return c.Div(
+    return c.Title("Studio Vision"), c.Div(
         c.Div(
             c.Div(
                 frm,
@@ -62,24 +62,16 @@ def login_post_route(login: LoginForm, sess):
 
         try:
             decoded_token = jwt.decode(access_token, SECRET_KEY, algorithms=["HS256"])
-            user_id = decoded_token.get('user_id')  # Extract user ID from the decoded token
         except jwt.InvalidTokenError:
             return c.RedirectResponse('/login', status_code=303)
 
-        #fetch user_data
-        user_details_url = f"http://localhost:8000/api/accounts/user/{user_id}/"
-        headers = {'Authorization': f'Bearer {access_token}'}
-        user_response = requests.get(user_details_url, headers=headers)
-
-        if user_response.status_code == 200:
-            user_data = user_response.json()
-            # Extract and save user information in the session
-            sess['access_token'] = access_token
-            sess['refresh_token'] = refresh_token
-            sess['username'] = user_data.get('username')
-            sess['first_name'] = user_data.get('first_name')
-            sess['last_name'] = user_data.get('last_name')
-            sess['email'] = user_data.get('email')
+        # Extract and save user information in the session
+        sess['access_token'] = access_token
+        sess['refresh_token'] = refresh_token
+        sess['username'] = decoded_token.get('username')
+        sess['first_name'] = decoded_token.get('first_name')
+        sess['last_name'] = decoded_token.get('last_name')
+        sess['email'] = decoded_token.get('email')
 
         return c.RedirectResponse('/', status_code=303)
     else:
@@ -93,3 +85,19 @@ def logout_route(sess):
     sess.pop('email', None)
     sess.pop('username', None)
     return c.RedirectResponse('/login', status_code=303)
+
+#check if the access token is expired
+def is_token_expired(access_token):
+    try:
+        decoded_token = jwt.decode(access_token, SECRET_KEY, algorithms=["HS256"])
+        exp_timestamp = decoded_token.get('exp')
+        if not exp_timestamp:
+            return True  # If no 'exp' claim, consider the token expired
+        exp_time = datetime.fromtimestamp(exp_timestamp, timezone.utc)
+        if exp_time < datetime.now(timezone.utc):
+            return True  # Token is expired
+        return False  # Token is valid
+    except jwt.ExpiredSignatureError:
+        return True  # Token has already expired
+    except jwt.InvalidTokenError:
+        return True  # Token is invalid or malformed
