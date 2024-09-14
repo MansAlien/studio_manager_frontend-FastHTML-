@@ -77,6 +77,8 @@ def login_post_route(login: LoginForm, sess):
         sess['first_name'] = decoded_token.get('first_name')
         sess['last_name'] = decoded_token.get('last_name')
         sess['email'] = decoded_token.get('email')
+        sess['permissions'] = decoded_token.get('permissions')
+        sess['is_superuser'] = decoded_token.get('is_superuser')
 
         return c.RedirectResponse('/', status_code=303)
 
@@ -92,6 +94,8 @@ def logout_route(sess):
     sess.pop('last_name', None)
     sess.pop('email', None)
     sess.pop('username', None)
+    sess.pop('permissions', None)
+    sess.pop('is_superuser', None)
     return c.RedirectResponse('/login', status_code=303)
 
 # Check if the access token is expired
