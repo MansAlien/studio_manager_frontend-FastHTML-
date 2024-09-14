@@ -1251,14 +1251,6 @@ input:checked + .toggle-bg {
   height: 100vh;
 }
 
-.h-1\/6 {
-  height: 16.666667%;
-}
-
-.h-5\/6 {
-  height: 83.333333%;
-}
-
 .w-1\/2 {
   width: 50%;
 }
@@ -1773,6 +1765,11 @@ input:checked + .toggle-bg {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.text-red-500 {
+  --tw-text-opacity: 1;
+  color: rgb(240 82 82 / var(--tw-text-opacity));
 }
 
 .placeholder-gray-400::-moz-placeholder {
