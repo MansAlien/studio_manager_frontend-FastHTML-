@@ -1,4 +1,5 @@
-from fasthtml import common as c 
+from fasthtml import common as c
+
 """
     <nav class="flex my-2 mt-12 p-4" aria-label="Breadcrumb">
       <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">

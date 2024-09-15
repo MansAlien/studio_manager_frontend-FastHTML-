@@ -1,8 +1,10 @@
 from fasthtml import common as c
-from components.header import Header
-from components.sidebar import sidebar
+
 from components.breadcrumb import breadcrumb
+from components.header import header
+from components.sidebar import sidebar_com
 from routes.auth import is_token_expired
+
 
 # Define card component with responsive classes
 def card(label, hx_get=None, hx_target=None, hx_swap=None):
@@ -25,10 +27,10 @@ def card(label, hx_get=None, hx_target=None, hx_swap=None):
 def home_get(sess):
     access_token = sess.get('access_token')
     if not access_token or is_token_expired(access_token):
-        Sidebar = c.P()
+        sidebar = c.P()
         return c.RedirectResponse('/logout', status_code=303)
 
-    Sidebar = sidebar()
+    sidebar = sidebar_com()
     permissions = sess.get("permissions")
     is_superuser = sess.get("is_superuser")
     cashier = c.P(cls="hidden")
@@ -44,8 +46,8 @@ def home_get(sess):
         editor = card("Editor", hx_get="/editor", hx_target="#content", hx_swap="innerHTML")
 
     home = c.Title("Studio Vision"), c.Div(
-        Header(sess),
-        Sidebar,
+        header(sess),
+        sidebar,
         c.Div(
             breadcrumb(),
             c.Div(

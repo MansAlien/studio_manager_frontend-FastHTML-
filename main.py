@@ -1,10 +1,11 @@
-from fasthtml.common import fast_app, serve, Link, Script
+import uvicorn
+from fasthtml.common import Link, Script, fast_app, serve
+
+from routes.auth import LoginForm, login_get_route, login_post_route, logout_route
+from routes.cashier import cashier_get
+from routes.editor import editor_get
 from routes.home import home_get
 from routes.settings import settings_get
-from routes.editor import editor_get
-from routes.cashier import cashier_get
-from routes.auth import LoginForm, login_get_route, login_post_route, logout_route
-import uvicorn
 
 # Create the FastHTML app
 app, rt = fast_app(hdrs=(

@@ -1,4 +1,5 @@
 from fasthtml import common as c
+
 """
 """
 def list_item(label, url=None, icon_name=None, hover_color="gray", hx_get=None, hx_swap=None, hx_target=None):
@@ -14,8 +15,7 @@ def list_item(label, url=None, icon_name=None, hover_color="gray", hx_get=None, 
     }
 
     # Build the attributes for the <A> element
-    attrs = {
-        "cls": f"flex items-top p-2 rounded-lg text-white {hover_colors[hover_color]} group",
+    attrs = { "cls": f"flex items-top p-2 rounded-lg text-white {hover_colors[hover_color]} group",
         "href": url,  # Traditional link
     }
     
@@ -46,7 +46,7 @@ def list_item(label, url=None, icon_name=None, hover_color="gray", hx_get=None, 
     
     return item
 
-def sidebar():
+def sidebar_com():
     return c.Aside(
         c.Div(
             c.Ul(

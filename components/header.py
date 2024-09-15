@@ -1,6 +1,7 @@
 from fasthtml import common as c
 
-def Header(sess):
+
+def header(sess):
     # Check for user authentication via access_token in session
     access_token = sess.get('access_token')
 
