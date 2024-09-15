@@ -35,14 +35,15 @@ def list_item(label, url=None, icon_name=None, hover_color="gray", hx_get=None, 
                 cls="inline-block w-5 h-5 transition duration-75 text-gray-200 group-hover:text-white"
             ),
             c.Span(label, cls="ms-5 text-gray-300 text-lg"),
-            **attrs
-        ),
+            **attrs),
         cls="w-full px-1 py-0"
     )
     
     return item
 
-def sidebar_com():
+def sidebar_com(items: list = None):
+    if not items:
+        items = [c.P(cls="hidden")]
     return c.Aside(
         c.Div(
             c.Ul(
@@ -50,9 +51,9 @@ def sidebar_com():
                 list_item("upload", "#", "upload"),
                 cls="space-y-2 font-medium"
             ),
+            # Dynamic content
             c.Ul(
-                c.Li("hello"),
-                c.Li("hello"),
+                *items,
                 cls="space-y-2 font-medium"
             ),
             c.Ul(

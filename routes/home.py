@@ -6,13 +6,11 @@ from components.sidebar import sidebar_com
 from routes.auth import is_token_expired
 
 
-def card(label, hx_get=None, hx_target=None, hx_swap=None):
+def card(label, url="#"):
     return c.Div(
         c.A(
             label,
-            hx_get=hx_get,
-            hx_target=hx_target,
-            hx_swap=hx_swap,
+            href=url,
             cls="w-full h-full flex justify-center items-center"
         ),
         cls="""flex justify-center items-center bg-gray-800 text-white text-2xl font-bold
@@ -36,14 +34,14 @@ def home_get(sess):
     editor = c.P(cls="hidden")
 
     if is_superuser:
-        editor = card("Editor", hx_get="/editor", hx_target="#content", hx_swap="innerHTML")
-        cashier = card("Cashier", hx_get="/cashier", hx_target="#content", hx_swap="innerHTML")
+        cashier = card("Cashier", url="/cashier")
+        editor = card("Editor", url="/editor")
     elif "view_city" in permissions:
-        cashier = card("Cashier", hx_get="/cashier", hx_target="#content", hx_swap="innerHTML")
+        cashier = card("Cashier", url="/cashier")
     elif "view_country" in permissions:
-        editor = card("Editor", hx_get="/editor", hx_target="#content", hx_swap="innerHTML")
+        editor = card("Editor", url="/editor")
 
-    home = c.Title("Studio Vision"), c.Div(
+    home = c.Title("Home"), c.Div(
         header(sess),
         sidebar,
         c.Div(

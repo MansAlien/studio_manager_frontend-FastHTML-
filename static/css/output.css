@@ -2143,10 +2143,6 @@ input:checked + .toggle-bg {
     margin-left: 16rem;
   }
 
-  .md\:ms-2 {
-    margin-inline-start: 0.5rem;
-  }
-
   .md\:hidden {
     display: none;
   }

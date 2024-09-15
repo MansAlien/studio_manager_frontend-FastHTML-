@@ -7,12 +7,13 @@ from routes.editor import editor_get
 from routes.home import home_get
 from routes.settings import settings_get
 
-app, rt = fast_app(hdrs=(
-    Link(rel="icon", href="/static/img/favicon.ico", type="image/x-icon"),
-    Link(rel="stylesheet", href="/static/css/output.css"),
-    Link(rel="stylesheet", href="/static/css/all.min.css"),
-    Script(src="/static/js/flowbite.min.js"),
-))
+# links
+favicon = Link(rel="icon", href="/static/img/favicon.ico", type="image/x-icon")
+style = Link(rel="stylesheet", href="/static/css/output.css")
+font_awesome = Link(rel="stylesheet", href="/static/css/all.min.css")
+flowbite = Script(src="/static/js/flowbite.min.js")
+
+app, rt = fast_app(hdrs=( favicon, style, font_awesome, flowbite ))
 
 @rt("/login", methods=["GET"])
 def login_get():
@@ -42,6 +43,7 @@ def editor(sess):
 def cashier(sess):
     return cashier_get(sess)
 
-if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=5001)
+serve()
+# if __name__ == "__main__":
+#     uvicorn.run(app, host="127.0.0.1", port=5001)
 
