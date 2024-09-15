@@ -14,12 +14,10 @@ def list_item(label, url=None, icon_name=None, hover_color="gray", hx_get=None, 
         "red": "hover:bg-red-800",
     }
 
-    # Build the attributes for the <A> element
     attrs = { "cls": f"flex items-top p-2 rounded-lg text-white {hover_colors[hover_color]} group",
         "href": url,  # Traditional link
     }
     
-    # Add HTMX attributes if they are provided
     if hx_get:
         attrs["hx-get"] = hx_get
     if hx_swap:
@@ -27,11 +25,9 @@ def list_item(label, url=None, icon_name=None, hover_color="gray", hx_get=None, 
     if hx_target:
         attrs["hx-target"] = hx_target
     
-    # Remove 'href' if HTMX attributes are present
     if hx_get:
         attrs.pop("href", None)
 
-    # Generate the list item
     item = c.Li(
         c.A(
             c.Span(
@@ -39,7 +35,7 @@ def list_item(label, url=None, icon_name=None, hover_color="gray", hx_get=None, 
                 cls="inline-block w-5 h-5 transition duration-75 text-gray-200 group-hover:text-white"
             ),
             c.Span(label, cls="ms-5 text-gray-300 text-lg"),
-            **attrs  # Pass the dynamically built attributes
+            **attrs
         ),
         cls="w-full px-1 py-0"
     )

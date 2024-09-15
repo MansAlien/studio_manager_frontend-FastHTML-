@@ -8,7 +8,7 @@ from fasthtml import common as c
 from fasthtml.common import dataclass
 
 
-def login_get_route(sess, error_message=None):
+def login_get_route(error_message=None):
     frm = c.Form(
         c.P("Username", cls="my-1 font-bold text-white text-sm"),
         c.Input(
@@ -33,18 +33,18 @@ def login_get_route(sess, error_message=None):
 
     error_div = c.Div(
         c.P(error_message, cls="text-red-500 text-sm mt-2") if error_message else "",
-        cls="text-center"  # Center the error message
+        cls="text-center"
     )
 
     return c.Title("Studio Vision"), c.Div(
         c.Div(
             c.Div(
-                frm, error_div,  # Include the error message if present
-                cls="sm:bg-gray-700 p-6 rounded-lg w-full max-w-sm"  # Set a max-width and full width on small screens
+                frm, error_div,
+                cls="sm:bg-gray-700 p-6 rounded-lg w-full max-w-sm"
             ),
             cls="flex h-full w-full justify-center items-center"
         ),
-        cls="bg-gray-600 font-inter h-screen w-screen"  # Add padding to the sides for small screens
+        cls="bg-gray-600 font-inter h-screen w-screen"
     )
 
 @dataclass
@@ -55,7 +55,6 @@ class LoginForm:
 load_dotenv()
 SECRET_KEY = os.getenv('SECRET_KEY')
 
-# Update to handle and display an error message if login fails
 def login_post_route(login: LoginForm, sess):
     jwt_url = "http://localhost:8000/api/token/"
     payload = {'username': login.username, 'password': login.password}
@@ -72,7 +71,6 @@ def login_post_route(login: LoginForm, sess):
         except jwt.InvalidTokenError:
             return login_get_route(sess, error_message="Invalid token received.")
 
-        # Extract and save user information in the session
         sess['access_token'] = access_token
         sess['refresh_token'] = refresh_token
         sess['username'] = decoded_token.get('username')
@@ -100,19 +98,18 @@ def logout_route(sess):
     sess.pop('is_superuser', None)
     return c.RedirectResponse('/login', status_code=303)
 
-# Check if the access token is expired
 def is_token_expired(access_token):
     try:
         decoded_token = jwt.decode(access_token, SECRET_KEY, algorithms=["HS256"])
         exp_timestamp = decoded_token.get('exp')
         if not exp_timestamp:
-            return True  # If no 'exp' claim, consider the token expired
+            return True
         exp_time = datetime.fromtimestamp(exp_timestamp, timezone.utc)
         if exp_time < datetime.now(timezone.utc):
-            return True  # Token is expired
-        return False  # Token is valid
+            return True
+        return False
     except jwt.ExpiredSignatureError:
-        return True  # Token has already expired
+        return True
     except jwt.InvalidTokenError:
-        return True  # Token is invalid or malformed
+        return True
 

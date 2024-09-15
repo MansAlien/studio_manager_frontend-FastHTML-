@@ -2,10 +2,8 @@ from fasthtml import common as c
 
 
 def header(sess):
-    # Check for user authentication via access_token in session
     access_token = sess.get('access_token')
 
-    # Define the user section if authenticated
     user_section = c.P(cls="hidden")
     if access_token:
         user_section = c.Div(
@@ -31,7 +29,6 @@ def header(sess):
             cls="flex items-center ms-3"
         )
 
-    # Define the sidebar button if authenticated, else leave empty
     button = (
         c.Button(
             c.Span("Open sidebar", cls="sr-only"),
@@ -44,14 +41,12 @@ def header(sess):
                 "aria-controls": "logo-sidebar"
             }
         )
-        if access_token else c.P()  # Show nothing if not authenticated
+        if access_token else c.P()
     )
 
-    # Return the entire navigation bar structure
     return c.Nav(
         c.Div(
             c.Div(
-                # Sidebar toggle and branding in a single flex container
                 c.Div(
                     button,
                     c.A(
@@ -63,9 +58,8 @@ def header(sess):
                         cls="hidden sm:flex ms-2 md:me-24 items-center",
                         href="/"
                     ),
-                    cls="flex items-center space-x-4"  # Ensure the button and logo are on the same line with spacing
+                    cls="flex items-center space-x-4"
                 ),
-                # User section if authenticated
                 c.Div(
                     c.Div(
                         user_section,

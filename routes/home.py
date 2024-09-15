@@ -6,7 +6,6 @@ from components.sidebar import sidebar_com
 from routes.auth import is_token_expired
 
 
-# Define card component with responsive classes
 def card(label, hx_get=None, hx_target=None, hx_swap=None):
     return c.Div(
         c.A(
@@ -21,7 +20,7 @@ def card(label, hx_get=None, hx_target=None, hx_swap=None):
                 transition duration-300 transform shadow-md hover:text-yellow-300 
                 hover:-translate-y-1 hover:text-shadow 
                 w-full sm:w-64 md:w-80 lg:w-96
-                h-40 sm:h-48 md:h-56 lg:h-64""",  # Adjust width/height based on screen size
+                h-40 sm:h-48 md:h-56 lg:h-64""",
     )
 
 def home_get(sess):
@@ -36,7 +35,6 @@ def home_get(sess):
     cashier = c.P(cls="hidden")
     editor = c.P(cls="hidden")
 
-    # Responsive cards depending on user role
     if is_superuser:
         editor = card("Editor", hx_get="/editor", hx_target="#content", hx_swap="innerHTML")
         cashier = card("Cashier", hx_get="/cashier", hx_target="#content", hx_swap="innerHTML")
@@ -57,7 +55,7 @@ def home_get(sess):
                     cls="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-10",
                 ),
                 cls="flex justify-center items-center",
-                style="min-height: 82vh"  # Ensure full height responsiveness
+                style="min-height: 82vh"
             ),
             cls="bg-gray-600 font-inter md:ml-64",
             id="content",
