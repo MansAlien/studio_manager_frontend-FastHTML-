@@ -1,6 +1,5 @@
 from fasthtml import common as c
 
-from components.breadcrumb import breadcrumb
 from components.header import header
 from components.sidebar import list_item, sidebar_com
 from routes.auth import is_token_expired
@@ -16,19 +15,18 @@ def settings_get(sess):
     orders = list_item("Orders", "#", "dynamic", hx_get="/settings/orders", hx_target="#content", hx_swap="innerHTML"),
     items = [employee, inventory, orders]
     sidebar = sidebar_com(items)
-    tabs = [
-        {"name": "Settings", "url": "#"},
-    ]
-
 
     settings = c.Title("Home"), c.Div(
         header(sess),
         sidebar,
         c.Div(
-            breadcrumb(tabs),
             cls="bg-gray-600 font-inter md:ml-64",
             id="content",
-            style="min-height: 94vh"
+            style="min-height: 94vh",
+            hx_get="/settings/employee",
+            hx_swap="innerHTML",
+            hx_trigger="load",
+            hx_target="this"
         ),
     )
     return settings
