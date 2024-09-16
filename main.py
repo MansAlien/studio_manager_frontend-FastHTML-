@@ -5,18 +5,19 @@ from routes.auth import LoginForm, login_get_route, login_post_route, logout_rou
 from routes.cashier import cashier_get
 from routes.editor import editor_get
 from routes.home import home_get
-from routes.settings.settings import settings_get
 from routes.settings.employee import employee_get
 from routes.settings.inventory import inventory_get
 from routes.settings.orders import orders_get
+from routes.settings.settings import settings_get
 
 # links
 favicon = Link(rel="icon", href="/static/img/favicon.ico", type="image/x-icon")
 style = Link(rel="stylesheet", href="/static/css/output.css")
-font_awesome = Link(rel="stylesheet", href="/static/css/all.min.css")
+font_awesome_css = Link(rel="stylesheet", href="/static/css/all.min.css")
+font_awesome_js = Link(rel="stylesheet", href="/static/css/all.min.css")
 flowbite = Script(src="/static/js/flowbite.min.js")
 
-app, rt = fast_app(hdrs=( favicon, style, font_awesome, flowbite ))
+app, rt = fast_app(hdrs=( favicon, style, font_awesome_css, font_awesome_js, flowbite ))
 
 @rt("/login", methods=["GET"])
 def login_get():
