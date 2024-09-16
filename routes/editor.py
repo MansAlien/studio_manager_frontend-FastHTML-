@@ -23,9 +23,9 @@ def editor_get(sess):
         sidebar,
         c.Div(
             breadcrumb(tabs),
-            cls="bg-gray-600 font-inter md:ml-64",
+            cls="bg-gray-600 font-inter md:ml-64 p-2",
             id="content",
-            style="min-height: 94vh"
+            style="min-height: 100vh"
         ),
     )
     return editor

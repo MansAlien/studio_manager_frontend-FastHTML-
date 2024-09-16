@@ -15,9 +15,9 @@ def inventory_get(sess):
 
 
     inventory = c.Div(
-            breadcrumb(tabs),
-            cls="bg-gray-600 font-inter",
-            id="content",
-            style="min-height: 94vh"
-        ),
+        breadcrumb(tabs),
+        cls="bg-gray-600 font-inter p-2",
+        id="content",
+        style="min-height: 100vh"
+    ),
     return inventory
