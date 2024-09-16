@@ -5,7 +5,10 @@ from routes.auth import LoginForm, login_get_route, login_post_route, logout_rou
 from routes.cashier import cashier_get
 from routes.editor import editor_get
 from routes.home import home_get
-from routes.settings import settings_get
+from routes.settings.settings import settings_get
+from routes.settings.employee import employee_get
+from routes.settings.inventory import inventory_get
+from routes.settings.orders import orders_get
 
 # links
 favicon = Link(rel="icon", href="/static/img/favicon.ico", type="image/x-icon")
@@ -34,6 +37,18 @@ def home(sess):
 @rt("/settings")
 def settings(sess):
     return settings_get(sess)
+
+@rt("/settings/employee")
+def employee_settings(sess):
+    return employee_get(sess)
+
+@rt("/settings/inventory")
+def inventory_settings(sess):
+    return inventory_get(sess)
+
+@rt("/settings/orders")
+def orders_settings(sess):
+    return orders_get(sess)
 
 @rt("/editor")
 def editor(sess):

@@ -8,6 +8,7 @@ def list_item(label, url=None, icon_name=None, hover_color="gray", hx_get=None, 
         "home": "text-xl fas fa-home",
         "upload": "text-xl fa-solid fa-upload",
         "logout": "text-xl fa-solid fa-right-from-bracket",
+        "dynamic": "text-xl fa-solid fa-circle-plus",
     }
     hover_colors = {
         "gray": "hover:bg-gray-700",
@@ -48,7 +49,7 @@ def sidebar_com(items: list = None):
         c.Div(
             c.Ul(
                 list_item("Home", "/", "home"),
-                list_item("upload", "#", "upload"),
+                list_item("Upload", "#", "upload"),
                 cls="space-y-2 font-medium"
             ),
             # Dynamic content
@@ -57,7 +58,7 @@ def sidebar_com(items: list = None):
                 cls="space-y-2 font-medium"
             ),
             c.Ul(
-                list_item("Settings", "#", "settings", hx_get="/settings", hx_swap="innerHTML", hx_target="#content"),
+                list_item("Settings", "/settings", "settings"),
                 list_item("Logout", "/logout", "logout", "red"),
                 cls="space-y-2 font-medium"),
             cls="h-full px-0 pb-4 overflow-y-auto bg-gray-900 flex flex-col justify-between",
