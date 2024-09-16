@@ -19,7 +19,7 @@ def cashier_get(sess):
     ]
 
 
-    cashier = c.Title("Home"), c.Div(
+    cashier = c.Title("Cashier"), c.Div(
         header(sess),
         sidebar,
         c.Div(

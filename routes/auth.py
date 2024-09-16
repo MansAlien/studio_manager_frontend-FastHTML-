@@ -36,7 +36,7 @@ def login_get_route(error_message=None):
         cls="text-center"
     )
 
-    return c.Title("Studio Vision"), c.Div(
+    return c.Title("Sign In"), c.Div(
         c.Div(
             c.Div(
                 frm, error_div,

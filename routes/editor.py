@@ -18,7 +18,7 @@ def editor_get(sess):
     ]
 
 
-    editor = c.Title("Home"), c.Div(
+    editor = c.Title("Editor"), c.Div(
         header(sess),
         sidebar,
         c.Div(

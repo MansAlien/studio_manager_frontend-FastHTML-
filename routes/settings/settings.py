@@ -16,7 +16,7 @@ def settings_get(sess):
     items = [employee, inventory, orders]
     sidebar = sidebar_com(items)
 
-    settings = c.Title("Home"), c.Div(
+    settings = c.Title("Settings"), c.Div(
         header(sess),
         sidebar,
         c.Div(
