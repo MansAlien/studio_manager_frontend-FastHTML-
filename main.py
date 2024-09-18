@@ -1,7 +1,7 @@
 import uvicorn
 from fasthtml.common import Link, Script, fast_app, serve
 
-from routes.auth import LoginForm, login_get_route, login_post_route, logout_route
+from routes.auth import LoginForm, login_get_route, login_post_route, logout_route, logout_blacklist
 from routes.cashier import cashier_get
 from routes.editor import editor_get
 from routes.home import home_get
@@ -30,6 +30,10 @@ def login_post(login: LoginForm, sess):
 @rt("/logout")
 def logout_rout(sess):
     return logout_route(sess)
+
+@rt("/logout/blacklist")
+def logout_blacklist_route(sess):
+    return logout_blacklist(sess)
 
 @rt("/")
 def home(sess):

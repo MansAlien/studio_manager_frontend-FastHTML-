@@ -2,7 +2,7 @@ from fasthtml import common as c
 
 from components.header import header
 from components.sidebar import list_item, sidebar_com
-from routes.auth import is_token_expired
+from routes.auth import is_blacklisted, is_token_expired
 
 
 def settings_get(sess):
@@ -10,6 +10,8 @@ def settings_get(sess):
     if not access_token or is_token_expired(access_token):
         sidebar = c.P()
         return c.RedirectResponse('/logout', status_code=303)
+    elif is_blacklisted(access_token):
+        return c.RedirectResponse('/logout/blacklist', status_code=303)
     employee = list_item("Employee", "#", "dynamic", hx_get="/settings/employee", hx_target="#content", hx_swap="innerHTML"),
     inventory = list_item("Inventory", "#", "dynamic", hx_get="/settings/inventory", hx_target="#content", hx_swap="innerHTML"),
     orders = list_item("Orders", "#", "dynamic", hx_get="/settings/orders", hx_target="#content", hx_swap="innerHTML"),

@@ -88,6 +88,18 @@ def login_post_route(login: LoginForm, sess):
     else:
         return login_get_route(sess, error_message="An error occurred. Please try again.")
 
+def logout_blacklist(sess):
+    sess.pop('access_token', None)
+    sess.pop('refresh_token', None)
+    sess.pop('first_name', None)
+    sess.pop('last_name', None)
+    sess.pop('email', None)
+    sess.pop('username', None)
+    sess.pop('user_id', None)
+    sess.pop('permissions', None)
+    sess.pop('is_superuser', None)
+    return c.RedirectResponse('/login', status_code=303)
+
 def logout_route(sess):
     # Remove the current user from the logged in users
     access_token = sess.get('access_token')
@@ -121,3 +133,10 @@ def is_token_expired(access_token):
     except jwt.InvalidTokenError:
         return True
 
+def is_blacklisted(access_token):
+    blacklist = "http://localhost:8000/api/accounts/blacklist/"
+    headers = {'Authorization': f'Bearer {access_token}'}
+    blacklist_response = requests.get(blacklist, headers=headers)
+    blacklist_data = blacklist_response.json()
+    blocked = [True for block in blacklist_data if block["token"] == access_token]
+    return blocked

@@ -4,7 +4,7 @@ from components.breadcrumb import breadcrumb
 from components.cards import label_card
 from components.header import header
 from components.sidebar import sidebar_com
-from routes.auth import is_token_expired
+from routes.auth import is_blacklisted, is_token_expired
 
 
 def home_get(sess):
@@ -12,6 +12,8 @@ def home_get(sess):
     if not access_token or is_token_expired(access_token):
         sidebar = c.P()
         return c.RedirectResponse('/logout', status_code=303)
+    elif is_blacklisted(access_token):
+        return c.RedirectResponse('/logout/blacklist', status_code=303)
 
     sidebar = sidebar_com()
     permissions = sess.get("permissions")

@@ -1,13 +1,15 @@
 from fasthtml import common as c
 
 from components.breadcrumb import breadcrumb
-from routes.auth import is_token_expired
+from routes.auth import is_blacklisted, is_token_expired
 
 
 def inventory_get(sess):
     access_token = sess.get('access_token')
     if not access_token or is_token_expired(access_token):
         return c.RedirectResponse('/logout', status_code=303)
+    elif is_blacklisted(access_token):
+        return c.RedirectResponse('/logout/blacklist', status_code=303)
     tabs = [
         {"name": "Settings", "url": "/settings"},
         {"name": "Inventory", "url": "#"}
