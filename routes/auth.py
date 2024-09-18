@@ -74,6 +74,7 @@ def login_post_route(login: LoginForm, sess):
         sess['access_token'] = access_token
         sess['refresh_token'] = refresh_token
         sess['username'] = decoded_token.get('username')
+        sess['user_id'] = decoded_token.get('user_id')
         sess['first_name'] = decoded_token.get('first_name')
         sess['last_name'] = decoded_token.get('last_name')
         sess['email'] = decoded_token.get('email')
@@ -88,12 +89,19 @@ def login_post_route(login: LoginForm, sess):
         return login_get_route(sess, error_message="An error occurred. Please try again.")
 
 def logout_route(sess):
+    # Remove the current user from the logged in users
+    access_token = sess.get('access_token')
+    user = "http://localhost:8000/api/logout/"
+    headers = {'Authorization': f'Bearer {access_token}'}
+    requests.post(user, headers=headers)
+
     sess.pop('access_token', None)
     sess.pop('refresh_token', None)
     sess.pop('first_name', None)
     sess.pop('last_name', None)
     sess.pop('email', None)
     sess.pop('username', None)
+    sess.pop('user_id', None)
     sess.pop('permissions', None)
     sess.pop('is_superuser', None)
     return c.RedirectResponse('/login', status_code=303)
