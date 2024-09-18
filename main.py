@@ -20,8 +20,8 @@ flowbite = Script(src="/static/js/flowbite.min.js")
 app, rt = fast_app(hdrs=( favicon, style, font_awesome_css, font_awesome_js, flowbite ))
 
 @rt("/login", methods=["GET"])
-def login_get():
-    return login_get_route()
+def login_get(sess):
+    return login_get_route(sess)
 
 @rt("/login", methods=["POST"])
 def login_post(login: LoginForm, sess):

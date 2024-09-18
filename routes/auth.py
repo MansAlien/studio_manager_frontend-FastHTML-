@@ -8,7 +8,7 @@ from fasthtml import common as c
 from fasthtml.common import dataclass
 
 
-def login_get_route(error_message=None):
+def login_get_route(sess, error_message=None): # don't remove sess
     frm = c.Form(
         c.P("Username", cls="my-1 font-bold text-white text-sm"),
         c.Input(
