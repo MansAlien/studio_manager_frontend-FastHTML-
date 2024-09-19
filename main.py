@@ -1,11 +1,18 @@
 import uvicorn
 from fasthtml.common import Link, Script, fast_app, serve
 
-from routes.auth import LoginForm, login_get_route, login_post_route, logout_route, logout_blacklist
+from routes.auth import (
+    LoginForm,
+    login_get_route,
+    login_post_route,
+    logout_blacklist,
+    logout_route,
+)
 from routes.cashier import cashier_get
 from routes.editor import editor_get
 from routes.home import home_get
-from routes.settings.employee import employee_get
+from routes.settings.employee.employee import employee_get
+from routes.settings.employee.employee_cards import get_employee_cards 
 from routes.settings.inventory import inventory_get
 from routes.settings.orders import orders_get
 from routes.settings.settings import settings_get
@@ -46,6 +53,10 @@ def settings(sess):
 @rt("/settings/employee")
 def employee_settings(sess):
     return employee_get(sess)
+
+@rt("/settings/employee/cards")
+def employee_cards(sess):
+    return get_employee_cards(sess)
 
 @rt("/settings/inventory")
 def inventory_settings(sess):
