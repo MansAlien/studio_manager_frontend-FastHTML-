@@ -14,21 +14,24 @@ USER_URL = f"{API_URL}accounts/user/"
 STATUS_URL = f"{API_URL}accounts/logged_in_user/"
 PROFILE_URL = f"{API_URL}accounts/user_profile/"
 
-
 def get_status_icon(condition: bool):
     """Return a green or red icon based on the condition (e.g., online status)."""
     red_icon = c.I(cls="fa-solid fa-circle", style="color: #f42a2a;")
     green_icon = c.I(cls="fa-solid fa-circle", style="color: #63E6BE;")
     return green_icon if condition else red_icon
 
-
 def map_gender(gender_code: str) -> str:
     """Map gender codes ('M', 'F') to human-readable strings."""
     return {"M": "Male", "F": "Female"}.get(gender_code, "Unknown")
 
-
-def build_user_row(user: Dict, profile: Dict, online_list: List[int]) -> List:
+def build_user_row(user: Dict, profile: Dict, online_list: List[int], is_superuser_session: bool):
     """Build a row for the user table with user data, profile data, and online status."""
+    is_superuser_user = user.get("is_superuser")
+
+    # If the session user is not a superuser, we skip superuser rows
+    if not is_superuser_session and is_superuser_user:
+        return []
+
     user_id = profile.get("id", "N/A")
     username = user.get("username", "N/A")
     name = f"{user.get('first_name', '')} {user.get('last_name', '')}".strip()
@@ -38,12 +41,12 @@ def build_user_row(user: Dict, profile: Dict, online_list: List[int]) -> List:
     job_title = profile.get("job_title", "N/A")
     status = get_status_icon(user_id in online_list)
     is_active = get_status_icon(user.get("is_active", False))
-    
+
     return [user_id, username, name, age, gender, salary, job_title, status, is_active]
 
-
-def get_employee_table(access_token):
+def get_employee_table(sess: Dict):
     """Build and return the employee table with user data and profile details."""
+    access_token = sess.get('access_token')
     headers = {'Authorization': f'Bearer {access_token}'}
 
     # Fetch user, profile, and status data
@@ -57,10 +60,14 @@ def get_employee_table(access_token):
     # Extract online user IDs from status data
     online_list = [status.get("user") for status in status_data if status.get('is_online')]
 
-    # Build table rows
+    # Check if the current session user is a superuser
+    is_superuser_session = sess.get("is_superuser", False)
+
+    # Build table rows, filtering out superusers if the session user is not a superuser
     users_list = [
-        build_user_row(user, profile, online_list)
+        build_user_row(user, profile, online_list, is_superuser_session)
         for user, profile in zip(user_data, profile_data)
+        if build_user_row(user, profile, online_list, is_superuser_session)  # Filter out empty rows
     ]
 
     # Table headers and rows
@@ -79,4 +86,3 @@ def get_employee_table(access_token):
         c.Tbody(*rows),
         cls="w-full text-sm text-left rtl:text-right text-gray-400"
     )
-
