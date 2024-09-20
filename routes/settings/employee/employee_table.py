@@ -1,69 +1,82 @@
 import os
+from typing import Dict, List
 
-import requests
 from dotenv import load_dotenv
 from fasthtml import common as c
 
 from components.table import table_header
+from utils.fetch_data import fetch_data
 
+# Constants
 load_dotenv()
 API_URL = os.getenv('API_URL')
+USER_URL = f"{API_URL}accounts/user/"
+STATUS_URL = f"{API_URL}accounts/logged_in_user/"
+PROFILE_URL = f"{API_URL}accounts/user_profile/"
 
-def get_employee_table(sess):
-    access_token = sess.get('access_token')
 
-    user_url = f"{API_URL}accounts/user/"
-    status_url = f"{API_URL}accounts/logged_in_user/"
-    profile_url = f"{API_URL}accounts/user_profile/"
-    headers = {'Authorization': f'Bearer {access_token}'}
-    user_response = requests.get(user_url, headers=headers)
-    profile_response = requests.get(profile_url, headers=headers)
-    status_response = requests.get(status_url, headers=headers)
-    users_list = []
-    online_list = []
-    green_icon = c.I(cls="fa-solid fa-circle", style="color: #63E6BE;")
+def get_status_icon(condition: bool):
+    """Return a green or red icon based on the condition (e.g., online status)."""
     red_icon = c.I(cls="fa-solid fa-circle", style="color: #f42a2a;")
-    if user_response.status_code == 200 and profile_response.status_code == 200:
-        user_data = user_response.json()
-        profile_data = profile_response.json()
-        status_data = status_response.json()
-        online_list = [status["user"] for status in status_data if status['is_online'] ]
-        for user, profile in zip(user_data, profile_data) :
-            id = profile["id"]
-            username = user["username"]
-            name = f"{user['first_name']} {user['last_name']}".strip()
-            age = profile["age"]
-            gender = ["Male" if profile["gender"] == "M" else "Femail"]
-            salary = profile["salary"]
-            job_title = profile["job_title"]
-            status = [green_icon if id in online_list else red_icon]
-            is_active = [green_icon if user["is_active"] else red_icon]
+    green_icon = c.I(cls="fa-solid fa-circle", style="color: #63E6BE;")
+    return green_icon if condition else red_icon
 
-            user_list = [id, username, name, age, *gender, salary, job_title, *status, *is_active]
-            users_list.append(user_list)
 
+def map_gender(gender_code: str) -> str:
+    """Map gender codes ('M', 'F') to human-readable strings."""
+    return {"M": "Male", "F": "Female"}.get(gender_code, "Unknown")
+
+
+def build_user_row(user: Dict, profile: Dict, online_list: List[int]) -> List:
+    """Build a row for the user table with user data, profile data, and online status."""
+    user_id = profile.get("id", "N/A")
+    username = user.get("username", "N/A")
+    name = f"{user.get('first_name', '')} {user.get('last_name', '')}".strip()
+    age = profile.get("age", "N/A")
+    gender = map_gender(profile.get("gender", ""))
+    salary = profile.get("salary", "N/A")
+    job_title = profile.get("job_title", "N/A")
+    status = get_status_icon(user_id in online_list)
+    is_active = get_status_icon(user.get("is_active", False))
+    
+    return [user_id, username, name, age, gender, salary, job_title, status, is_active]
+
+
+def get_employee_table(access_token):
+    """Build and return the employee table with user data and profile details."""
+    headers = {'Authorization': f'Bearer {access_token}'}
+
+    # Fetch user, profile, and status data
+    user_data = fetch_data(USER_URL, headers)
+    profile_data = fetch_data(PROFILE_URL, headers)
+    status_data = fetch_data(STATUS_URL, headers)
+
+    if not (user_data and profile_data and status_data):
+        return c.P("Error fetching data. Please try again later.")
+
+    # Extract online user IDs from status data
+    online_list = [status.get("user") for status in status_data if status.get('is_online')]
+
+    # Build table rows
+    users_list = [
+        build_user_row(user, profile, online_list)
+        for user, profile in zip(user_data, profile_data)
+    ]
+
+    # Table headers and rows
     headers = ["ID", "Username", "Name", "Age", "Gender", "Salary", "Job Title", "O/F", "Action"]
     header = table_header(headers)
     rows = [
         c.Tr(
-            *[
-                c.Td(
-                    item,
-                    cls="bg-transparent px-6 py-4 text-base",
-                    scope="row"
-                ) for item in user
-            ],
+            *[c.Td(item, cls="bg-transparent px-6 py-4 text-base", scope="row") for item in user],
             cls="odd:bg-gray-900 even:bg-gray-800 border-b border-gray-700"
-        )for user in users_list
+        ) for user in users_list
     ]
 
+    # Return the constructed table
     return c.Table(
-        c.Thead(
-            header,
-            cls="text-sm uppercase bg-gray-700 text-gray-400"
-        ),
-        c.Tbody(
-            *rows
-        ),
+        c.Thead(header, cls="text-sm uppercase bg-gray-700 text-gray-400"),
+        c.Tbody(*rows),
         cls="w-full text-sm text-left rtl:text-right text-gray-400"
     )
+

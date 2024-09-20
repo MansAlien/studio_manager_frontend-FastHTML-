@@ -61,7 +61,8 @@ def employee_cards(sess):
 
 @rt("/settings/employee/table")
 def employee_table(sess):
-    return get_employee_table(sess)
+    access_token = sess["access_token"]
+    return get_employee_table(access_token)
 
 @rt("/settings/inventory")
 def inventory_settings(sess):
