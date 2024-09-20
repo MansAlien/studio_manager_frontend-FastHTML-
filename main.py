@@ -12,7 +12,8 @@ from routes.cashier import cashier_get
 from routes.editor import editor_get
 from routes.home import home_get
 from routes.settings.employee.employee import employee_get
-from routes.settings.employee.employee_cards import get_employee_cards 
+from routes.settings.employee.employee_cards import get_employee_cards
+from routes.settings.employee.employee_table import get_employee_table
 from routes.settings.inventory import inventory_get
 from routes.settings.orders import orders_get
 from routes.settings.settings import settings_get
@@ -57,6 +58,10 @@ def employee_settings(sess):
 @rt("/settings/employee/cards")
 def employee_cards(sess):
     return get_employee_cards(sess)
+
+@rt("/settings/employee/table")
+def employee_table(sess):
+    return get_employee_table(sess)
 
 @rt("/settings/inventory")
 def inventory_settings(sess):
