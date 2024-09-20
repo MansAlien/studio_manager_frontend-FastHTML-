@@ -36,8 +36,7 @@ def settings_get(sess: Dict):
     sidebar = sidebar_com(items)
 
     # Page layout with header, sidebar, and content
-    settings_page = c.Div(
-        c.Title("Settings"),  # Page title
+    settings_page = c.Title("Settings"), c.Div(
         header(sess),  # Header component
         sidebar,  # Sidebar with menu items
         c.Div(  # Main content section
