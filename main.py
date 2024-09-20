@@ -53,7 +53,8 @@ def settings(sess):
 
 @rt("/settings/employee")
 def employee_settings(sess):
-    return employee_get(sess)
+    access_token = sess["access_token"]
+    return employee_get(access_token)
 
 @rt("/settings/employee/cards")
 def employee_cards(sess):
