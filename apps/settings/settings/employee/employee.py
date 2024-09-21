@@ -1,9 +1,9 @@
 from fasthtml import common as c
 
+from apps.auth.auth import is_blacklisted, is_token_expired
 from components.breadcrumb import breadcrumb
 from components.button import button
 from components.modal import modal
-from apps.auth.auth import is_blacklisted, is_token_expired
 
 
 def build_cards_section():
