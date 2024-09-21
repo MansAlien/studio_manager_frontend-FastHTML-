@@ -1,6 +1,7 @@
 from fasthtml import common as c
 
 from components.breadcrumb import breadcrumb
+from components.button import button
 from routes.auth import is_blacklisted, is_token_expired
 
 
@@ -51,7 +52,7 @@ def employee_get(access_token):
 
         # Create employee button section
         c.Div(
-            c.Button("Create Employee", cls="btn btn-primary"),
+            button("Create Employee"),
             cls="my-4",
         ),
 

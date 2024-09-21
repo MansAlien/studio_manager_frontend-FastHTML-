@@ -14,7 +14,7 @@ def table_row(row_data):
     return [
         c.Td(
             str(item),
-            cls="bg-transparent px-6 py-4 text-base",
+            cls="px-6 py-4 text-base",
             scope="row"
         ) for item in row_data
     ]

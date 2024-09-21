@@ -20,12 +20,12 @@ from routes.settings.settings import settings_get
 
 # links
 favicon = Link(rel="icon", href="/static/img/favicon.ico", type="image/x-icon")
-style = Link(rel="stylesheet", href="/static/css/output.css")
 font_awesome_css = Link(rel="stylesheet", href="/static/css/all.min.css")
-font_awesome_js = Link(rel="stylesheet", href="/static/css/all.min.css")
+font_awesome_js = Script(src="/static/js/all.min.js")
 flowbite = Script(src="/static/js/flowbite.min.js")
+tailwind_cdn = Script(src="/static/js/tailwind_cdn.js")
 
-app, rt = fast_app(hdrs=( favicon, style, font_awesome_css, font_awesome_js, flowbite ))
+app, rt = fast_app(hdrs=(favicon, tailwind_cdn, font_awesome_css, font_awesome_js, flowbite ))
 
 @rt("/login", methods=["GET"])
 def login_get(sess):
