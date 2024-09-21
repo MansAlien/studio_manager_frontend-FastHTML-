@@ -1,7 +1,7 @@
 from fasthtml import common as c
 
 from components.breadcrumb import breadcrumb
-from routes.auth import is_blacklisted, is_token_expired
+from apps.auth.auth import is_blacklisted, is_token_expired
 
 
 def inventory_get(sess):

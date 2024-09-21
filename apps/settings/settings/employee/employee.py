@@ -3,7 +3,7 @@ from fasthtml import common as c
 from components.breadcrumb import breadcrumb
 from components.button import button
 from components.modal import modal
-from routes.auth import is_blacklisted, is_token_expired
+from apps.auth.auth import is_blacklisted, is_token_expired
 
 
 def build_cards_section():

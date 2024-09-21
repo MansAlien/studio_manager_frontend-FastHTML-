@@ -4,7 +4,7 @@ from fasthtml import common as c
 
 from components.header import header
 from components.sidebar import list_item, sidebar_com
-from routes.auth import is_blacklisted, is_token_expired
+from apps.auth.auth import is_blacklisted, is_token_expired
 
 
 def build_sidebar_items() -> List:
