@@ -1,10 +1,10 @@
 from fasthtml import common as c
 
+from apps.auth.auth import is_blacklisted, is_token_expired
 from components.breadcrumb import breadcrumb
 from components.cards import label_card
 from components.header import header
 from components.sidebar import sidebar_com
-from routes.auth import is_blacklisted, is_token_expired
 
 
 def home_get(sess):

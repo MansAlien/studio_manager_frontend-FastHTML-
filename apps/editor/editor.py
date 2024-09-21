@@ -1,12 +1,12 @@
 from fasthtml import common as c
 
+from apps.auth.auth import is_blacklisted, is_token_expired
 from components.breadcrumb import breadcrumb
 from components.header import header
 from components.sidebar import list_item, sidebar_com
-from routes.auth import is_blacklisted, is_token_expired
 
 
-def cashier_get(sess):
+def editor_get(sess):
     access_token = sess.get('access_token')
     if not access_token or is_token_expired(access_token):
         sidebar = c.P()
@@ -14,14 +14,13 @@ def cashier_get(sess):
     elif is_blacklisted(access_token):
         return c.RedirectResponse('/logout/blacklist', status_code=303)
     editor = list_item("Editor", "/editor", "settings"),
-    items = [editor]
-    sidebar = sidebar_com(items)
+    sidebar = sidebar_com()
     tabs = [
-        {"name": "Cashier", "url": "#"}
+        {"name": "Editor", "url": "#"}
     ]
 
 
-    cashier = c.Title("Cashier"), c.Div(
+    editor = c.Title("Editor"), c.Div(
         header(sess),
         sidebar,
         c.Div(
@@ -31,5 +30,6 @@ def cashier_get(sess):
             style="min-height: 100vh"
         ),
     )
-    return cashier
+    return editor
+
 

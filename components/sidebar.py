@@ -1,7 +1,6 @@
 from fasthtml import common as c
 
-"""
-"""
+
 def list_item(label, url=None, icon_name=None, hover_color="gray", hx_get=None, hx_swap=None, hx_target=None):
     icons = {
         "settings": "text-xl fa-solid fa-gear",

@@ -5,7 +5,7 @@ def breadcrumb(tabs: list = None):
     tabs = tabs or []
     items = [
         c.Li(
-            c.Span(">"),
+            c.Span(">", style="cursor: default"),
             c.A(
                 tab["name"],
                 href=tab.get("url", "#"),

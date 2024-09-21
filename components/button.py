@@ -1,7 +1,7 @@
 from fasthtml import common as c
 
 
-def button(label, color="default"):
+def button(label, color="default", hx_get=None, hx_post=None, hx_swap=None, hx_target=None, extra={}):
     styles = {
         "default": "text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-800",
         "alternative": "text-gray-400 bg-gray-800 border border-gray-600 hover:text-white hover:bg-gray-700",
@@ -12,8 +12,22 @@ def button(label, color="default"):
         "yellow": "text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-yellow-900",
         "purple": "text-white bg-purple-600 hover:bg-purple-700 focus:ring-purple-900",
     }
+    attrs = {
+        "cls": f"{styles[color]} focus:outline-none font-medium rounded-lg text-base px-5 py-2.5 me-2 mb-2 border-transparent",
+    }
+    
+    if hx_get:
+        attrs["hx-get"] = hx_get
+    if hx_post:
+        attrs["hx-post"] = hx_post
+    if hx_swap:
+        attrs["hx-swap"] = hx_swap
+    if hx_target:
+        attrs["hx-target"] = hx_target
+
     return  c.Button(
         label,
         type="button",
-        cls=f"{styles[color]} focus:outline-none font-medium rounded-lg text-base px-5 py-2.5 me-2 mb-2 border-transparent",
+        **attrs,
+        **extra
     )
