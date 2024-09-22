@@ -1,4 +1,6 @@
 import os
+import requests
+
 from typing import Dict
 
 from dotenv import load_dotenv
@@ -17,6 +19,7 @@ def get_username_list(users: Dict, key: str):
     return username_list
 
 def create_employee_get(access_token: str):
+    """Build and return the create employee form and checking the validation of (username, email, password)."""
     headers = {'Authorization': f'Bearer {access_token}'}
     if not access_token or is_token_expired(access_token):
         return c.RedirectResponse('/logout', status_code=303)
@@ -88,7 +91,7 @@ def create_employee_get(access_token: str):
                         """,
                 },),
         c.Button('Register', type='submit'),
-        action='/register', method='post', hx_post="/register", hx_target='#result',
+        action='/settings/employee/create', method='post', hx_post="/settings/employee/create", hx_target='#result',
     )
 
     return c.Div(
@@ -97,3 +100,50 @@ def create_employee_get(access_token: str):
         c.Div(id='username-error', cls='error-message'),  # This will display the username error
         c.Div(id='result'),
     )
+
+def create_employee_post(username: str, first_name: str, last_name: str, email: str, password: str, confirm: str, access_token: str):
+    """Handle form submission and create a new employee."""
+    
+    headers = {'Authorization': f'Bearer {access_token}'}
+    
+    # Fetch existing users to double-check username and email availability
+    user_data = fetch_data(USER_URL, headers)
+    if user_data:
+        username_list = [user['username'] for user in user_data]
+        email_list = [user['email'] for user in user_data]
+    else:
+        return
+
+    # Check if username or email already exists (server-side validation)
+    if username in username_list:
+        return c.Div("Username is already taken", id='result', style="color: red;")
+    if email in email_list:
+        return c.Div("Email is already taken", id='result', style="color: red;")
+
+    # Check if passwords match
+    if password != confirm:
+        return c.Div("Passwords do not match", id='result', style="color: red;")
+    
+    # Send the data to the API to create the user
+    data = {
+        'username': username,
+        'first_name': first_name,
+        'last_name': last_name,
+        'email': email,
+        'password': password
+    }
+    
+    try:
+        # Make the API call to register the user
+        response = requests.post(USER_URL, json=data, headers=headers)
+        
+        if response.status_code == 201:
+            # Success: return a success message
+            return c.Div("Employee created successfully!", id='result', style="color: green;")
+        else:
+            # Handle errors returned by the API
+            return c.Div(f"Error: {response.json().get('message', "You don't have the privileges")}", id='result', style="color: red;")
+    
+    except requests.RequestException as e:
+        # Handle request failure
+        return c.Div(f"Request failed: {str(e)}", id='result', style="color: red;")
