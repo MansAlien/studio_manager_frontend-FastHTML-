@@ -2,7 +2,6 @@ from fasthtml import common as c
 
 from apps.auth.auth import is_blacklisted, is_token_expired
 from components.breadcrumb import breadcrumb
-from components.button import button
 from components.modal import modal
 
 
@@ -51,7 +50,7 @@ def employee_get(access_token):
         # Status cards section
         build_cards_section(),
 
-        modal("Create Employee", hx_get="/cashier"),
+        modal("Create Employee", hx_get="/settings/employee/create"),
 
         # Employee table section
         build_table_section(),
