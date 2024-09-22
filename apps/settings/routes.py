@@ -1,4 +1,5 @@
 from apps.cashier.cashier import cashier_get
+from apps.settings.settings.employee.create_employee import create_employee_get
 from apps.settings.settings.employee.employee import employee_get
 from apps.settings.settings.employee.employee_cards import get_employee_cards
 from apps.settings.settings.employee.employee_table import get_employee_table
@@ -20,6 +21,11 @@ def settings_register_routes(app):
     def employee_settings(sess):
         access_token = sess["access_token"]
         return employee_get(access_token)
+
+    @app.get("/settings/employee/create")
+    def create_employee(sess):
+        access_token = sess["access_token"]
+        return create_employee_get(access_token)
 
     @app.get("/settings/employee/cards")
     def employee_cards(sess):
