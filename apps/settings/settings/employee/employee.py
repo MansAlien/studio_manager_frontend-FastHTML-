@@ -51,6 +51,7 @@ def employee_get(access_token):
         build_cards_section(),
 
         modal("Create Employee", hx_get="/settings/employee/create"),
+        modal("Create Profile", hx_get="/settings/profile/create"),
 
         # Employee table section
         build_table_section(),

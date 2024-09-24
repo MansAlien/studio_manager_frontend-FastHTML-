@@ -1,12 +1,12 @@
 import os
-import requests
-
 from typing import Dict
 
+import requests
 from dotenv import load_dotenv
 from fasthtml import common as c
 
 from apps.auth.auth import is_blacklisted, is_token_expired
+from apps.settings.settings.employee.create_employee_profile import create_profile_get
 from utils.fetch_data import fetch_data
 
 load_dotenv()
@@ -91,7 +91,7 @@ def create_employee_get(access_token: str):
                         """,
                 },),
         c.Button('Register', type='submit'),
-        action='/settings/employee/create', method='post', hx_post="/settings/employee/create", hx_target='#result',
+        hx_post="/settings/employee/create", hx_target='#modal_content',
     )
 
     return c.Div(
@@ -139,7 +139,7 @@ def create_employee_post(username: str, first_name: str, last_name: str, email: 
         
         if response.status_code == 201:
             # Success: return a success message
-            return c.Div("Employee created successfully!", id='result', style="color: green;")
+            return create_profile_get(access_token)
         else:
             # Handle errors returned by the API
             return c.Div(f"Error: {response.json().get('message', "You don't have the privileges")}", id='result', style="color: red;")
