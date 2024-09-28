@@ -90,7 +90,7 @@ def create_employee_get(access_token: str):
                         set #password's @aria-invalid to 'false'
                         """,
                 },),
-        c.Button('Register', type='submit'),
+        c.Button('Create Account', type='submit'),
         hx_post="/settings/employee/create", hx_target='#modal_content',
     )
 
