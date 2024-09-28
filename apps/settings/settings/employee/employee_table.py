@@ -38,7 +38,7 @@ def build_user_row(user: Dict, profile: Dict, online_list: List[int], is_superus
     age = profile.get("age", "N/A")
     gender = map_gender(profile.get("gender", ""))
     salary = profile.get("salary", "N/A")
-    job_title = profile.get("job_title", "N/A")
+    job_title = profile.get("job_title_name", "N/A")
     status = get_status_icon(user_id in online_list)
     is_active = get_status_icon(user.get("is_active", False))
 
