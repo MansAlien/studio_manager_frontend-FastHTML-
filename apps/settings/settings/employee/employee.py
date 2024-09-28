@@ -23,8 +23,9 @@ def build_table_section():
         cls="relative overflow-x-auto shadow-md sm:rounded-lg my-4",
         hx_get="/settings/employee/table",
         hx_swap="innerHTML",
-        hx_trigger="load, htmx:afterRequest",
-        hx_target="this"
+        hx_trigger="load, htmx:afterRequest from:#modal_content",
+        hx_target="this",
+        id="employee_table",
     )
 
 

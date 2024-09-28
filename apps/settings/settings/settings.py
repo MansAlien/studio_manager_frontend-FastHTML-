@@ -9,16 +9,13 @@ from components.sidebar import list_item, sidebar_com
 
 def build_sidebar_items() -> List:
     """Build and return a list of sidebar items for settings."""
-    employee = list_item(
-        "Employee", "#", "dynamic", hx_get="/settings/employee", hx_target="#content", hx_swap="innerHTML"
-    )
     inventory = list_item(
         "Inventory", "#", "dynamic", hx_get="/settings/inventory", hx_target="#content", hx_swap="innerHTML"
     )
     orders = list_item(
         "Orders", "#", "dynamic", hx_get="/settings/orders", hx_target="#content", hx_swap="innerHTML"
     )
-    return [employee, inventory, orders]
+    return [inventory, orders]
 
 
 def settings_get(sess: Dict):
