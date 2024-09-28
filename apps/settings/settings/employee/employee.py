@@ -23,7 +23,7 @@ def build_table_section():
         cls="relative overflow-x-auto shadow-md sm:rounded-lg my-4",
         hx_get="/settings/employee/table",
         hx_swap="innerHTML",
-        hx_trigger="load",
+        hx_trigger="load, htmx:afterRequest",
         hx_target="this"
     )
 
@@ -51,7 +51,6 @@ def employee_get(access_token):
         build_cards_section(),
 
         modal("Create Employee", hx_get="/settings/employee/create"),
-        modal("Create Profile", hx_get="/settings/profile/create"),
 
         # Employee table section
         build_table_section(),
