@@ -5,6 +5,7 @@ from apps.settings.settings.employee.create_employee import (
 )
 from apps.settings.settings.employee.create_employee_profile import (
     create_profile_get,
+    create_profile_post,
 )
 from apps.settings.settings.employee.employee import employee_get
 from apps.settings.settings.employee.employee_cards import get_employee_cards
@@ -45,6 +46,12 @@ def settings_register_routes(app):
     def create_employee_profile(sess):
         access_token = sess["access_token"]
         return create_profile_get(access_token)
+
+    #create user Profile (POST)
+    @app.put("/settings/profile/create")
+    def post_employee_profile(job_title: str, city: str, date_of_birth: str, start: str, address: str, age: str, gender: str, salary: float, sess):
+        access_token = sess["access_token"]
+        return create_profile_post(job_title, city, date_of_birth, start, address, age, gender, salary, access_token)
 
     @app.get("/settings/employee/cards")
     def employee_cards(sess):
