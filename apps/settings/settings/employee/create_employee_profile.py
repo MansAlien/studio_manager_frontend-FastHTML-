@@ -91,10 +91,9 @@ def create_profile_post(job_title: str, city: str, date_of_birth: str, start: st
         'address': address,
         'age': age,
         'gender': gender,
-        'user': profile_id,  # Associate with the last user's profile
+        'user': profile_id,
         'salary': salary,
     }
-    print(data)
     
     try:
         # Determine the correct HTTP method based on whether we're updating or creating

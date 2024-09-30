@@ -1,5 +1,5 @@
 import os
-from typing import Dict
+from typing import Dict, List
 
 import requests
 from dotenv import load_dotenv
@@ -13,10 +13,16 @@ load_dotenv()
 API_URL = os.getenv('API_URL')
 USER_URL = f"{API_URL}accounts/user/"
 
-def get_username_list(users: Dict, key: str):
-    """ get the usernames list from the users dict """
-    username_list = [user[key] for user in users]
-    return username_list
+# Constants for error messages
+USERNAME_TAKEN_ERROR = "Username is already taken"
+EMAIL_TAKEN_ERROR = "Email is already taken"
+PASSWORD_MISMATCH_ERROR = "Passwords do not match"
+GENERAL_ERROR = "An error occurred. Please try again."
+ACCESS_DENIED_ERROR = "You don't have the privileges"
+
+def get_value_list(users: List[Dict], key: str):
+    """Extract a list of values from a list of user dictionaries based on the key."""
+    return [user.get(key) for user in users]
 
 def create_employee_get(access_token: str):
     """Build and return the create employee form and checking the validation of (username, email, password)."""
@@ -28,8 +34,8 @@ def create_employee_get(access_token: str):
 
     # Fetch the user data and get the username list
     user_data = fetch_data(USER_URL, headers)
-    username_list = get_username_list(user_data, "username")
-    email_list = get_username_list(user_data, "email")
+    username_list = get_value_list (user_data, "username")
+    email_list = get_value_list(user_data, "email")
 
     frm = c.Form(
         c.Input(type="text", name="username",
@@ -103,28 +109,25 @@ def create_employee_get(access_token: str):
 
 def create_employee_post(username: str, first_name: str, last_name: str, email: str, password: str, confirm: str, access_token: str):
     """Handle form submission and create a new employee."""
-    
     headers = {'Authorization': f'Bearer {access_token}'}
     
-    # Fetch existing users to double-check username and email availability
+    # Fetch existing users to validate username and email
     user_data = fetch_data(USER_URL, headers)
-    if user_data:
-        username_list = [user['username'] for user in user_data]
-        email_list = [user['email'] for user in user_data]
-    else:
-        return
+    if not user_data:
+        return c.Div(GENERAL_ERROR, id='result', style="color: red;")
 
-    # Check if username or email already exists (server-side validation)
+    username_list = get_value_list(user_data, "username")
+    email_list = get_value_list(user_data, "email")
+
+       # Server-side validation
     if username in username_list:
-        return c.Div("Username is already taken", id='result', style="color: red;")
+        return c.Div(USERNAME_TAKEN_ERROR, id='result', style="color: red;")
     if email in email_list:
-        return c.Div("Email is already taken", id='result', style="color: red;")
-
-    # Check if passwords match
+        return c.Div(EMAIL_TAKEN_ERROR, id='result', style="color: red;")
     if password != confirm:
-        return c.Div("Passwords do not match", id='result', style="color: red;")
-    
-    # Send the data to the API to create the user
+        return c.Div(PASSWORD_MISMATCH_ERROR, id='result', style="color: red;") 
+
+    # Prepare the user data
     data = {
         'username': username,
         'first_name': first_name,
