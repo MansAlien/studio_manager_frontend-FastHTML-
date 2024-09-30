@@ -1,4 +1,4 @@
-from fasthtml import common as c
+from fasthtml.common import Button
 
 
 def button(label, color="default", hx_get=None, hx_post=None, hx_swap=None, hx_target=None, extra={}):
@@ -25,7 +25,7 @@ def button(label, color="default", hx_get=None, hx_post=None, hx_swap=None, hx_t
     if hx_target:
         attrs["hx-target"] = hx_target
 
-    return  c.Button(
+    return  Button(
         label,
         type="button",
         **attrs,

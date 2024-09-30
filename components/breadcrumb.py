@@ -1,12 +1,12 @@
-from fasthtml import common as c
+from fasthtml.common import A, Li, Nav, Ol, Span
 
 
 def breadcrumb(tabs: list = None):
     tabs = tabs or []
     items = [
-        c.Li(
-            c.Span(">", style="cursor: default"),
-            c.A(
+        Li(
+            Span(">", style="cursor: default"),
+            A(
                 tab["name"],
                 href=tab.get("url", "#"),
                 cls="text-sm font-medium text-gray-400 hover:text-white"
@@ -16,14 +16,14 @@ def breadcrumb(tabs: list = None):
     ]
 
     items.insert(0, 
-         c.Li(
-             c.A(c.Span(cls="fas fa-home hover:text-white"), href="/", cls="inline-flex items-center"),
+         Li(
+             A(Span(cls="fas fa-home hover:text-white"), href="/", cls="inline-flex items-center"),
              cls="inline-flex items-center space-x-1 text-gray-400 ms-1"
          )
     )
 
-    return c.Nav(
-        c.Ol(*items, cls="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse"),
+    return Nav(
+        Ol(*items, cls="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse"),
         cls="flex my-2 mt-12 py-5",
         **{"aria-label": "Breadcrumb"}
     )

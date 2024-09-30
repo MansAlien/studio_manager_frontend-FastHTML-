@@ -1,18 +1,18 @@
-from fasthtml import common as c
+from fasthtml.common import Td, Th, Thead, Tr
 
 
 def table_header(headers):
-    header_row = c.Tr(
-        *[c.Th(header, cls="px-6 py-3 bg-transparent border-none", scope="col") for header in headers]
+    header_row = Tr(
+        *[Th(header, cls="px-6 py-3 bg-transparent border-none", scope="col") for header in headers]
     )
-    return c.Thead(
+    return Thead(
             header_row,
             cls="text-sm uppercase bg-gray-700 text-gray-400"
         )
 
 def table_row(row_data):
     return [
-        c.Td(
+        Td(
             str(item),
             cls="px-6 py-4 text-base",
             scope="row"

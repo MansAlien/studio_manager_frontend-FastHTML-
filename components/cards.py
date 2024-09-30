@@ -1,9 +1,9 @@
-from fasthtml import common as c
+from fasthtml.common import A, Div, I, P, Span
 
 
 def label_card(label, url="#"):
-    return c.Div(
-        c.A(
+    return Div(
+        A(
             label,
             href=url,
             cls="w-full h-full flex justify-center items-center"
@@ -34,11 +34,11 @@ def status_card(label, icon_name, number, color="green"):
         },
     }
 
-    return c.Div(
-        c.Span( label, cls=f"{colors[color]["text"]} font-bold text-xl "),
-        c.Span(
-            c.P(number, cls="text-xl"),
-            c.I(cls=icons[icon_name]),
+    return Div(
+        Span( label, cls=f"{colors[color]["text"]} font-bold text-xl "),
+        Span(
+            P(number, cls="text-xl"),
+            I(cls=icons[icon_name]),
             cls="flex justify-between items-center text-white  pt-4 px-2"
         ),
         cls=f"h-28 rounded bg-gray-800 border-l-4 {colors[color]["border"]} p-4"

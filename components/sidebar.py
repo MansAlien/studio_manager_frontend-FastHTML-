@@ -1,4 +1,4 @@
-from fasthtml import common as c
+from fasthtml.common import A, Aside, Div, I, Li, P, Span, Ul
 
 
 def list_item(label, url=None, icon_name=None, hover_color="gray", hx_get=None, hx_swap=None, hx_target=None):
@@ -28,13 +28,13 @@ def list_item(label, url=None, icon_name=None, hover_color="gray", hx_get=None, 
     if hx_get:
         attrs.pop("href", None)
 
-    item = c.Li(
-        c.A(
-            c.Span(
-                c.I(cls=icons.get(icon_name, "text-xl fa-solid fa-link")),
+    item = Li(
+        A(
+            Span(
+                I(cls=icons.get(icon_name, "text-xl fa-solid fa-link")),
                 cls="inline-block w-5 h-5 transition duration-75 text-gray-200 group-hover:text-white"
             ),
-            c.Span(label, cls="ms-5 text-gray-300 text-lg"),
+            Span(label, cls="ms-5 text-gray-300 text-lg"),
             **attrs),
         cls="w-full px-1 py-0"
     )
@@ -43,20 +43,20 @@ def list_item(label, url=None, icon_name=None, hover_color="gray", hx_get=None, 
 
 def sidebar_com(items: list = None):
     if not items:
-        items = [c.P(cls="hidden")]
-    return c.Aside(
-        c.Div(
-            c.Ul(
+        items = [P(cls="hidden")]
+    return Aside(
+        Div(
+            Ul(
                 list_item("Home", "/", "home"),
                 list_item("Upload", "#", "upload"),
                 cls="space-y-2 font-medium"
             ),
             # Dynamic content
-            c.Ul(
+            Ul(
                 *items,
                 cls="space-y-2 font-medium"
             ),
-            c.Ul(
+            Ul(
                 list_item("Settings", "/settings", "settings"),
                 list_item("Logout", "/logout", "logout", "red"),
                 cls="space-y-2 font-medium"),
