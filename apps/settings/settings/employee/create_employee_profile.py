@@ -5,6 +5,7 @@ import requests
 from dotenv import load_dotenv
 from fasthtml import common as c
 
+from components.select_field import select_field
 from utils.fetch_data import fetch_data
 
 # Load environment variables
@@ -22,22 +23,12 @@ def get_username_list(users: Dict, key: str) -> List[str]:
     """Get a list of usernames from the user dictionary."""
     return [user.get(key, "") for user in users]
 
-def generate_select_field(data, placeholder, name, aria_label, cls="mb-4 p-2"):
-    """Generate a select field with options."""
-    return c.Select(
-        c.Option(f"Select the {placeholder}...", selected=True, disabled=True, value=""),
-        *[c.Option(item["name"], value=item["id"]) for item in data],
-        name=name, required=True,
-        **{"aria-label": aria_label},
-        cls=cls
-    )
-
 def create_profile_form(jobtitle_data: List[Dict], city_data: List[Dict], genders: List[Dict]):
     """Create a form for user profile creation."""
     return c.Form(
-        generate_select_field(jobtitle_data, "job title", "job_title", "Select your job title"),
-        generate_select_field(city_data, "city", "city", "Select your city"),
-        generate_select_field(genders, "gender", "gender", "Select your gender"),
+        select_field(jobtitle_data, "job title", "job_title", "Select your job title"),
+        select_field(city_data, "city", "city", "Select your city"),
+        select_field(genders, "gender", "gender", "Select your gender"),
         c.H2("Birthday: ", cls="mb-1"),
         c.Input(type="date", name="date_of_birth", **{"aria-label": "Date of Birth"}),
         c.H2("Start: ", cls="mb-1"),
