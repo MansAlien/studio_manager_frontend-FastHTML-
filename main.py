@@ -10,6 +10,7 @@ from apps.settings.routes import settings_register_routes
 # links
 favicon = Link(rel="icon", href="/static/img/favicon.ico", type="image/x-icon")
 font_awesome_css = Link(rel="stylesheet", href="/static/css/all.min.css")
+pico_css = Link(rel="stylesheet", href="/static/css/pico.min.css")
 font_awesome_js = Script(src="/static/js/all.min.js")
 flowbite = Script(src="/static/js/flowbite.min.js")
 hyper = Script(src="/static/js/_hyperscript.min.js")
