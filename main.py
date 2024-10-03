@@ -1,5 +1,5 @@
 import uvicorn
-from fasthtml.common import Link, Script, fast_app, serve
+from fasthtml.common import Link, Script, fast_app, serve, Style
 
 from apps.auth.routes import auth_register_routes
 from apps.cashier.routes import cashier_register_routes
@@ -15,8 +15,9 @@ font_awesome_js = Script(src="/static/js/all.min.js")
 flowbite = Script(src="/static/js/flowbite.min.js")
 hyper = Script(src="/static/js/_hyperscript.min.js")
 tailwind_cdn = Script(src="/static/js/tailwind_cdn.js")
+style=Style("html { background-color: #4b5563; }")
 
-app, rt = fast_app(hdrs=(favicon, tailwind_cdn, font_awesome_css, font_awesome_js, flowbite, hyper ))
+app, rt = fast_app(hdrs=(style, favicon, tailwind_cdn, font_awesome_css, font_awesome_js, flowbite, hyper ))
 
 auth_register_routes(app)
 home_register_routes(app)
