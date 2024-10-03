@@ -21,6 +21,7 @@ def build_table_section():
     """Build the table section to display employee data."""
     return c.Div(
         cls="relative overflow-x-auto shadow-md sm:rounded-lg my-4",
+        style="max-height: 55%",
         hx_get="/settings/employee/table",
         hx_swap="innerHTML",
         hx_trigger="load, htmx:afterRequest from:#modal_content",
@@ -56,7 +57,7 @@ def employee_get(access_token):
         # Employee table section
         build_table_section(),
 
-        cls="bg-gray-600 font-inter p-2",
+        cls="bg-gray-600 font-inter p-2 h-screen",
         id="content",
         style="min-height: 100vh"
     )
