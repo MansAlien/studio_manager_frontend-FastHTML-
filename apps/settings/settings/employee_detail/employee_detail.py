@@ -2,7 +2,7 @@ from fasthtml import common as c
 
 from apps.auth.auth import is_blacklisted, is_token_expired
 from components.breadcrumb import breadcrumb
-from components.modal import modal
+from components.button import button
 
 
 def employee_detail_get(id, access_token):
@@ -19,10 +19,20 @@ def employee_detail_get(id, access_token):
         {"name": "Employee", "url": "/settings"},
         {"name": "Details", "url": "#"}
     ]
-
     employee_detail = c.Div(
         breadcrumb(tabs),
-        c.H1(id),
+        c.Div(
+            button("info", color="tab_active"),
+            button("login", color="tab"),
+            button("deduction", color="tab"),
+            button("permissions", color="tab"),
+            id="tabs",
+            hx_target="#tab-contents",
+            cls="flex space-x-4 border-b border-gray-500",
+        ),
+        c.Div(
+            id="tab-contents",
+        ),
         cls="bg-gray-600 font-inter p-2 h-screen",
         id="content",
         style="min-height: 100vh"

@@ -9,10 +9,10 @@ from apps.settings.settings.employee.create_employee_profile import (
 )
 from apps.settings.settings.employee.employee import employee_get
 from apps.settings.settings.employee.employee_cards import get_employee_cards
-from apps.settings.settings.employee.employee_detail.employee_detail import (
+from apps.settings.settings.employee.employee_table import get_employee_table
+from apps.settings.settings.employee_detail.employee_detail import (
     employee_detail_get,
 )
-from apps.settings.settings.employee.employee_table import get_employee_table
 from apps.settings.settings.inventory import inventory_get
 from apps.settings.settings.orders import orders_get
 from apps.settings.settings.settings import settings_get

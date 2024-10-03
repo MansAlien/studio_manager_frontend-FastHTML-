@@ -1,5 +1,5 @@
 import uvicorn
-from fasthtml.common import Link, Script, fast_app, serve, Style
+from fasthtml.common import Link, Script, Style, fast_app, serve
 
 from apps.auth.routes import auth_register_routes
 from apps.cashier.routes import cashier_register_routes
