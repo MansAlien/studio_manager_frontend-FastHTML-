@@ -20,8 +20,7 @@ def build_cards_section():
 def build_table_section():
     """Build the table section to display employee data."""
     return c.Div(
-        cls="relative overflow-x-auto shadow-md sm:rounded-lg my-4",
-        style="max-height: 55%",
+        cls="relative overflow-x-auto shadow-md sm:rounded-lg my-4 h-[55%]",
         hx_get="/settings/employee/table",
         hx_swap="innerHTML",
         hx_trigger="load, htmx:afterRequest from:#modal_content",

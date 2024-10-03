@@ -9,6 +9,9 @@ from apps.settings.settings.employee.create_employee_profile import (
 )
 from apps.settings.settings.employee.employee import employee_get
 from apps.settings.settings.employee.employee_cards import get_employee_cards
+from apps.settings.settings.employee.employee_detail.employee_detail import (
+    employee_detail_get,
+)
 from apps.settings.settings.employee.employee_table import get_employee_table
 from apps.settings.settings.inventory import inventory_get
 from apps.settings.settings.orders import orders_get
@@ -28,6 +31,11 @@ def settings_register_routes(app):
     def employee_settings(sess):
         access_token = sess["access_token"]
         return employee_get(access_token)
+
+    @app.get("/settings/employee/detail/{id}")
+    def employee_detail_settings(id: int, sess):
+        access_token = sess["access_token"]
+        return employee_detail_get(id, access_token)
 
     #create user accounts (GET)
     @app.get("/settings/employee/create")

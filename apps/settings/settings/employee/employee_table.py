@@ -68,7 +68,18 @@ def get_employee_table(sess: Dict):
     header = table_header(headers)
     rows = [
         c.Tr(
-            *[c.Td(item, cls="bg-transparent px-6 py-4 text-base", scope="row") for item in user],
+            # ID
+            c.Td(
+                c.A(
+                    user[0] ,  
+                    hx_get=f"/settings/employee/detail/{user[0]}",
+                    hx_target="#content",
+                    hx_swap="innerHTML",
+                    cls="font-bold text-gray-200 hover:underline",
+                ),
+                cls="bg-transparent px-6 py-4 text-base", scope="row"),
+            # The rest of the items
+            *[c.Td(item, cls="bg-transparent px-6 py-4 text-base", scope="row") for item in user[1:]],
             cls="odd:bg-gray-900 even:bg-gray-800 border-b border-gray-700"
         ) for user in users_list
     ]

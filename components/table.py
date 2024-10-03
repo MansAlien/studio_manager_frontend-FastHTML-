@@ -7,7 +7,7 @@ def table_header(headers):
     )
     return Thead(
             header_row,
-            cls="text-sm uppercase bg-gray-700 text-gray-400"
+            cls="sticky top-0 text-sm uppercase bg-gray-700 text-gray-400"
         )
 
 def table_row(row_data):
