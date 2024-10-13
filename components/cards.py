@@ -35,11 +35,11 @@ def status_card(label, icon_name, number, color="green"):
     }
 
     return Div(
-        Span( label, cls=f"{colors[color]["text"]} font-bold text-xl "),
+        Span( label, cls=f"{colors[color]['text']} font-bold text-xl "),
         Span(
             P(number, cls="text-xl"),
             I(cls=icons[icon_name]),
             cls="flex justify-between items-center text-white  pt-4 px-2"
         ),
-        cls=f"h-28 rounded bg-gray-800 border-l-4 {colors[color]["border"]} p-4"
+        cls=f"h-28 rounded bg-gray-800 border-l-4 {colors[color]['border']} p-4"
     )

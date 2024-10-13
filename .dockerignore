@@ -1,0 +1,34 @@
+# Ignore usual Django and Python artifacts
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.pyz
+*.pyzw
+*.pyw
+
+# Ignore common Python virtual environment folders
+venv/
+.venv/
+.env
+
+# Ignore Node.js related artifacts (if Tailwind CSS is installed via npm)
+node_modules/
+npm-debug.log
+
+# Ignore Docker specific files and directories
+.dockerignore
+.dockerignore.example
+Dockerfile*
+
+# Ignore version control artifacts
+.git
+.gitignore
+
+# other files
+Meetings/
+images/
+package-*
+README*
+tailwind*
+open_folder.py

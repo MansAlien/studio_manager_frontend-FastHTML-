@@ -145,7 +145,8 @@ def create_employee_post(username: str, first_name: str, last_name: str, email: 
             return create_profile_get(access_token)
         else:
             # Handle errors returned by the API
-            return c.Div(f"Error: {response.json().get('message', "You don't have the privileges")}", id='result', style="color: red;")
+            return c.Div(f"Error: {response.json().get('message', 'You don’t have the privileges')}", id='result', style='color: red;')
+
     
     except requests.RequestException as e:
         # Handle request failure

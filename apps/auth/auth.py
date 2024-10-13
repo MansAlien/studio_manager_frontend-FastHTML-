@@ -7,6 +7,11 @@ from dotenv import load_dotenv
 from fasthtml import common as c
 from fasthtml.common import dataclass
 
+load_dotenv()
+API_URL = os.getenv('API_URL')
+LOGOUT_URL = f"{API_URL}logout/"
+BLACKLIST_URL = f"{API_URL}accounts/blacklist/"
+JWT_URL = f"{API_URL}token/"
 
 def login_get_route(sess, error_message=None): # don't remove sess
     frm = c.Form(
@@ -56,10 +61,9 @@ load_dotenv()
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 def login_post_route(login: LoginForm, sess):
-    jwt_url = "http://localhost:8000/api/token/"
     payload = {'username': login.username, 'password': login.password}
 
-    response = requests.post(jwt_url, json=payload)
+    response = requests.post(JWT_URL, json=payload)
 
     if response.status_code == 200:
         tokens = response.json()
@@ -103,9 +107,8 @@ def logout_blacklist(sess):
 def logout_route(sess):
     # Remove the current user from the logged in users
     access_token = sess.get('access_token')
-    user = "http://localhost:8000/api/logout/"
     headers = {'Authorization': f'Bearer {access_token}'}
-    requests.post(user, headers=headers)
+    requests.post(LOGOUT_URL, headers=headers)
 
     sess.pop('access_token', None)
     sess.pop('refresh_token', None)
@@ -134,9 +137,8 @@ def is_token_expired(access_token):
         return True
 
 def is_blacklisted(access_token):
-    blacklist = "http://localhost:8000/api/accounts/blacklist/"
     headers = {'Authorization': f'Bearer {access_token}'}
-    blacklist_response = requests.get(blacklist, headers=headers)
+    blacklist_response = requests.get(BLACKLIST_URL, headers=headers)
     blacklist_data = blacklist_response.json()
     blocked = [True for block in blacklist_data if block["token"] == access_token]
     return blocked

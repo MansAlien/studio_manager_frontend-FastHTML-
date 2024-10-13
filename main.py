@@ -26,7 +26,5 @@ editor_register_routes(app)
 settings_register_routes(app)
 
 
-serve()
-# if __name__ == "__main__":
-#     uvicorn.run(app, host="127.0.0.1", port=5001)
-
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=5001)
